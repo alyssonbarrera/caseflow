@@ -36,7 +36,7 @@ export function useBaseFlowModel() {
   const flowRef = useRef<HTMLDivElement>(null);
 
   const { takeSnapshot } = useUndoRedo();
-  const { screenToFlowPosition, updateNodeData } = useReactFlow();
+  const { getNodes, screenToFlowPosition, updateNodeData } = useReactFlow();
 
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -83,7 +83,7 @@ export function useBaseFlowModel() {
     ({ fromIndex, toIndex, fromGroupId, toGroupId }: ReorderCluesParams) => {
       takeSnapshot();
 
-      const currentNodes = [...nodes];
+      const currentNodes = [...getNodes()];
       const validation = validateNodesAndClues({
         toGroupId,
         fromIndex,
@@ -119,7 +119,7 @@ export function useBaseFlowModel() {
         return moveCluesBetweenGroups(context, validation);
       });
     },
-    [setNodes, takeSnapshot, updateNodeData, nodes]
+    [setNodes, takeSnapshot, updateNodeData, getNodes]
   );
 
   const onConnect: OnConnect = useCallback(
