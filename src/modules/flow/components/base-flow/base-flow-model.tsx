@@ -83,7 +83,7 @@ export function useBaseFlowModel() {
     ({ fromIndex, toIndex, fromGroupId, toGroupId }: ReorderCluesParams) => {
       takeSnapshot();
 
-      const currentNodes = [...getNodes()];
+      const currentNodes = getNodes();
       const validation = validateNodesAndClues({
         toGroupId,
         fromIndex,
