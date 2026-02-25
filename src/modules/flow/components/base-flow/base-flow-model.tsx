@@ -71,14 +71,6 @@ export function useBaseFlowModel() {
   const { drop } = useDropNode(handleDropNode);
   drop(flowRef);
 
-  const onNodeDragStart: OnNodeDrag = useCallback(() => {
-    takeSnapshot();
-  }, [takeSnapshot]);
-
-  const onSelectionDragStart: SelectionDragHandler = useCallback(() => {
-    takeSnapshot();
-  }, [takeSnapshot]);
-
   const handleGlobalReorderClues = useCallback(
     ({ fromIndex, toIndex, fromGroupId, toGroupId }: ReorderCluesParams) => {
       takeSnapshot();
