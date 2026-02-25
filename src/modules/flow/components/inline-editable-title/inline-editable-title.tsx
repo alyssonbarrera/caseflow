@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useInlineEditableTitleModel } from "./inline-editable-title-model";
 import { InlineEditableTitleView } from "./inline-editable-title-view";
 
@@ -10,7 +11,7 @@ type InlineEditableTitleViewProps = Omit<
 > &
   ModelProps;
 
-export function InlineEditableTitle({
+function InlineEditableTitleComponent({
   value,
   onSave,
   placeholder,
@@ -27,3 +28,5 @@ export function InlineEditableTitle({
     />
   );
 }
+
+export const InlineEditableTitle = memo(InlineEditableTitleComponent);

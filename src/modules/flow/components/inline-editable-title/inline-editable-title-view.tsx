@@ -14,6 +14,7 @@ export function InlineEditableTitleView({
   placeholder,
   handleChange,
   handleKeyDown,
+  handleMouseDown,
   ...props
 }: InlineEditableTitleViewProps) {
   return (
@@ -27,6 +28,7 @@ export function InlineEditableTitleView({
       onBlur={handleSave}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
+      onMouseDown={handleMouseDown}
       placeholder={placeholder}
       ref={inputRef}
       value={editValue}

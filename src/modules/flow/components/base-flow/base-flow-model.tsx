@@ -122,6 +122,14 @@ export function useBaseFlowModel() {
     [setNodes, takeSnapshot, updateNodeData, getNodes]
   );
 
+  const onNodeDragStart: OnNodeDrag = useCallback(() => {
+    takeSnapshot();
+  }, [takeSnapshot]);
+
+  const onSelectionDragStart: SelectionDragHandler = useCallback(() => {
+    takeSnapshot();
+  }, [takeSnapshot]);
+
   const onConnect: OnConnect = useCallback(
     (params) => {
       takeSnapshot();

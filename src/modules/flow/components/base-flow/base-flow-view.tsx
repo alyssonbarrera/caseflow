@@ -51,6 +51,9 @@ export function BaseFlowView({
           onSelectionDragStart={onSelectionDragStart}
           panOnDrag={[1, 2]}
           panOnScroll
+          proOptions={{
+            hideAttribution: true,
+          }}
           selectionOnDrag
         >
           <Background color="#7D7E7E" variant={BackgroundVariant.Dots} />

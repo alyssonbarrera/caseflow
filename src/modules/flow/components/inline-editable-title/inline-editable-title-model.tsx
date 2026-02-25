@@ -1,4 +1,11 @@
-import { type ChangeEvent, type KeyboardEvent, useRef, useState } from "react";
+import {
+  type ChangeEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 type InlineEditableTitleModelProps = {
   value: string;
@@ -12,6 +19,7 @@ export function useInlineEditableTitleModel({
   placeholder = "Digite o título...",
 }: InlineEditableTitleModelProps) {
   const [editValue, setEditValue] = useState(value);
+  const isSpacePressedRef = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSave = () => {
@@ -44,6 +52,34 @@ export function useInlineEditableTitleModel({
     setEditValue(e.target.value);
   };
 
+  const handleMouseDown = (e: MouseEvent<HTMLInputElement>) => {
+    if (isSpacePressedRef.current) {
+      e.preventDefault();
+    }
+  };
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.code === "Space" && !event.repeat) {
+        isSpacePressedRef.current = true;
+      }
+    };
+
+    const handleGlobalKeyUp = (event: globalThis.KeyboardEvent) => {
+      if (event.code === "Space") {
+        isSpacePressedRef.current = false;
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    window.addEventListener("keyup", handleGlobalKeyUp);
+
+    return () => {
+      window.removeEventListener("keydown", handleGlobalKeyDown);
+      window.removeEventListener("keyup", handleGlobalKeyUp);
+    };
+  }, []);
+
   return {
     inputRef,
     editValue,
@@ -51,5 +87,6 @@ export function useInlineEditableTitleModel({
     placeholder,
     handleChange,
     handleKeyDown,
+    handleMouseDown,
   };
 }
